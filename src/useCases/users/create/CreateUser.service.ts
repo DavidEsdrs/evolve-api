@@ -8,7 +8,9 @@ export class CreateUserService {
     ) {}
 
     async execute({ bio, email, password, unique_username, username }: ICreateUserDTO) {
-        const userAlreadyExist = await this.prisma.user.findUnique({ where: { email } });
+        const userAlreadyExist = await this.prisma.user.findFirst({ 
+            where: { OR: [ { email }, { unique_username } ] } 
+        });
         if(userAlreadyExist) {
             throw new Error("Credentials taken!");
         }
