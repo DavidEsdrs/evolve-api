@@ -1,4 +1,4 @@
-import prisma from "../../../prisma"
+import prisma from "../../../utils/prisma";
 import { CreateUserController } from "./CreateUser.controller";
 import { CreateUserService } from "./CreateUser.service"
 
