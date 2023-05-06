@@ -4,6 +4,8 @@ import { buildLoginUser } from "./useCases/users/login/LoginUser.builder";
 import { buildCreatePost } from "./useCases/posts/create/CreatePost.builder";
 import { createPostMiddlewares } from "./useCases/posts/create/CreatePost.middleware";
 import { ensureAuth } from "./middlewares/ensureAuth";
+import { buildGetManyPosts } from "./useCases/posts/getMany/GetManyPosts.builder";
+import { getManyPostsMiddlewares } from "./useCases/posts/getMany/GetManyPosts.middleware";
 
 const router = Router();
 
@@ -16,5 +18,7 @@ router.post("/users/login", (req, res) => buildLoginUser().handle(req, res));
 router.use(ensureAuth);
 
 router.post("/posts", ...createPostMiddlewares, (req, res) => buildCreatePost().handle(req, res));
+
+router.get("/posts", ...getManyPostsMiddlewares, (req, res) => buildGetManyPosts().handle(req, res));
 
 export { router };
