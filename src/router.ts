@@ -8,6 +8,7 @@ import { buildGetManyPosts } from "./useCases/posts/getMany/GetManyPosts.builder
 import { getManyPostsMiddlewares } from "./useCases/posts/getMany/GetManyPosts.middleware";
 import { buildGetOnePost } from "./useCases/posts/getOne/GetOnePost.builder";
 import { getOnePostMiddlewares } from "./useCases/posts/getOne/GetOnePost.middleware";
+import { buildCreateComment } from "./useCases/comments/create/CreateComment.builder";
 
 const router = Router();
 
@@ -24,5 +25,7 @@ router.post("/posts", ...createPostMiddlewares, (req, res) => buildCreatePost().
 router.get("/posts", ...getManyPostsMiddlewares, (req, res) => buildGetManyPosts().handle(req, res));
 
 router.get("/posts/:id", ...getOnePostMiddlewares, (req, res) => buildGetOnePost().handle(req, res));
+
+router.post("/posts/:post_id/comment", (req, res) => buildCreateComment().handle(req, res));
 
 export { router };
