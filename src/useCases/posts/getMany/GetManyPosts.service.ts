@@ -9,7 +9,15 @@ export class GetManyPostsService {
     async execute({ limit = 10, offset = 0 }: IGetManyPostsDTO) {
         const posts = await this.prisma.post.findMany({
             take: limit,
-            skip: offset
+            skip: offset,
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true
+                    }
+                }
+            }
         });
         return posts;
     }
