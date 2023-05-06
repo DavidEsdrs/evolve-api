@@ -17,6 +17,7 @@ model User {
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @default(now()) @map("updated_at")
   posts           Post[]
+  comments        Comment[]
 
   @@map("users")
 }
@@ -42,6 +43,9 @@ model Comment {
   updatedAt DateTime @default(now()) @map("updated_at")
   postId    Int
   post      Post     @relation(fields: [postId], references: [id])
+
+  creatorId Int
+  user      User     @relation(fields: [creatorId], references: [id])
 
   @@index([postId], map: "comments_postId_fkey")
   @@map("comments")
