@@ -6,10 +6,22 @@ type ExpressMiddleware = (req: Request, res: Response, next: NextFunction) => vo
 export const createValidator = (schema: Schema): ExpressMiddleware  => {
     return async (req, res, next) => {
         try {
-            await schema.parse(req.body);
+            await schema.parseAsync(req.body);
             return next();
         } catch (err) {
             return res.status(422).json({ error: "Invalid body!" });
+        }
+    }
+}
+
+export const createQueryValidator = (schema: Schema): ExpressMiddleware  => {
+    return async (req, res, next) => {
+        try {
+            const query = await schema.parseAsync(req.query);
+            req.query = query;
+            return next();
+        } catch (err) {
+            return res.status(422).json({ error: "Invalid query!" });
         }
     }
 }
