@@ -18,6 +18,19 @@ export class GetOnePostService {
                         content: true
                     }
                 },
+                likes: {
+                    orderBy: {
+                        createdAt: "desc"
+                    },
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                username: true
+                            }
+                        }
+                    }
+                },
                 _count: true
             }
         });
