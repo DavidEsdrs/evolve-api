@@ -8,7 +8,7 @@ const postSchema = z.object({
 
 const validatePost = createValidator(postSchema);
 
-const validateFile = createMulterParser("uploads", "image", ["png", "jpeg", "jpg", "mp4"]);
+const validateFile = createMulterParser("uploads", "image", ["png", "jpeg", "jpg"]);
 
 const createPostMiddlewares = [validateFile, validatePost];
 
