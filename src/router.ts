@@ -11,6 +11,7 @@ import { getOnePostMiddlewares } from "./useCases/posts/getOne/GetOnePost.middle
 import { buildCreateComment } from "./useCases/comments/create/CreateComment.builder";
 import { buildCreateLike } from "./useCases/likes/create/CreateLike.builder";
 import { buildFollowUser } from "./useCases/users/follow/FollowUser.builder";
+import { buildGetPostImage } from "./useCases/posts/getImage/GetPostImage.builder";
 
 const router = Router();
 
@@ -27,6 +28,8 @@ router.post("/posts", ...createPostMiddlewares, (req, res) => buildCreatePost().
 router.get("/posts", ...getManyPostsMiddlewares, (req, res) => buildGetManyPosts().handle(req, res));
 
 router.get("/posts/:id", ...getOnePostMiddlewares, (req, res) => buildGetOnePost().handle(req, res));
+
+router.get("/posts/:post_id/image", (req, res) => buildGetPostImage().handle(req, res));
 
 router.post("/posts/:post_id/comment", (req, res) => buildCreateComment().handle(req, res));
 
