@@ -32,4 +32,6 @@ router.post("/posts/:post_id/comment", (req, res) => buildCreateComment().handle
 
 router.post("/posts/:post_id/like", (req, res) => buildCreateLike().handle(req, res));
 
+router.post("/users/:user_id/followers", ensureAuth, (req, res) => buildFollowUser().handle(req, res));
+
 export { router };
