@@ -8,16 +8,19 @@ datasource db {
 }
 
 model User {
-  id              Int      @id @default(autoincrement())
-  username        String   @db.VarChar(30)
-  unique_username String   @unique @db.VarChar(30)
-  email           String   @unique @db.VarChar(50)
-  password        String   @db.VarChar(100)
-  bio             String?  @db.VarChar(255)
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @default(now()) @map("updated_at")
+  id              Int           @id @default(autoincrement())
+  username        String        @db.VarChar(30)
+  unique_username String        @unique @db.VarChar(30)
+  email           String        @unique @db.VarChar(50)
+  password        String        @db.VarChar(100)
+  bio             String?       @db.VarChar(255)
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @default(now()) @map("updated_at")
   posts           Post[]
   comments        Comment[]
+  likes           Like[]
+  followers       FollowerMap[] @relation("following_id")
+  following       FollowerMap[] @relation("follower_id")
 
   @@map("users")
 }
@@ -30,10 +33,24 @@ model Post {
   updatedAt   DateTime  @default(now()) @map("updated_at")
   userId      Int
   comments    Comment[]
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes       Like[]
 
   @@index([userId], map: "posts_userId_fkey")
   @@map("posts")
+}
+
+model Like {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  @@map("likes")
 }
 
 model Comment {
@@ -42,11 +59,21 @@ model Comment {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
   postId    Int
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   creatorId Int
-  user      User     @relation(fields: [creatorId], references: [id])
+  user      User @relation(fields: [creatorId], references: [id], onDelete: Cascade)
 
   @@index([postId], map: "comments_postId_fkey")
   @@map("comments")
+}
+
+model FollowerMap {
+  id          Int  @id @default(autoincrement())
+  followingId Int
+  following   User @relation("following_id", fields: [followingId], references: [id], onDelete: Cascade)
+  followerId  Int
+  follower    User @relation("follower_id", fields: [followerId], references: [id], onDelete: Cascade)
+
+  @@map("followers_map")
 }
