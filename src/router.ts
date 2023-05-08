@@ -12,6 +12,7 @@ import { buildCreateComment } from "./useCases/comments/create/CreateComment.bui
 import { buildCreateLike } from "./useCases/likes/create/CreateLike.builder";
 import { buildFollowUser } from "./useCases/users/follow/FollowUser.builder";
 import { buildGetPostImage } from "./useCases/posts/getImage/GetPostImage.builder";
+import { buildGetUser } from "./useCases/users/get/GetUser.builder";
 
 const router = Router();
 
@@ -22,6 +23,8 @@ router.post("/users", (req, res) => buildCreateUser().handle(req, res));
 router.post("/users/login", (req, res) => buildLoginUser().handle(req, res));
 
 router.use(ensureAuth);
+
+router.get("/users", ensureAuth, (req, res) => buildGetUser().handle(req, res));
 
 router.post("/posts", ...createPostMiddlewares, (req, res) => buildCreatePost().handle(req, res));
 
