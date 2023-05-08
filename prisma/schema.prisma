@@ -28,20 +28,31 @@ model User {
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
-  description String    @db.VarChar(5000)
-  image_path  String    @db.VarChar(100)
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @map("updated_at")
-  userId      Int
-  comments    Comment[]
-  commentsCount Int     @default(0) @map("comments_count")
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  likes       Like[]
-  likesCount  Int       @default(0) @map("likes_count")
+  id            Int       @id @default(autoincrement())
+  description   String    @db.VarChar(5000)
+  image_path    String    @db.VarChar(100)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @default(now()) @map("updated_at")
+  userId        Int
+  comments      Comment[]
+  commentsCount Int       @default(0) @map("comments_count")
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes         Like[]
+  likesCount    Int       @default(0) @map("likes_count")
+  tags          Tag[]
 
   @@index([userId], map: "posts_userId_fkey")
   @@map("posts")
+}
+
+model Tag {
+  id        Int @id @default(autoincrement())
+  name      String @db.VarChar(20)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  post      Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int
+  @@map("tags")
 }
 
 model Like {
@@ -66,7 +77,7 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   creatorId Int
-  user      User @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
 
   @@index([postId], map: "comments_postId_fkey")
   @@map("comments")
