@@ -11,27 +11,21 @@ export class GetOnePostService {
             where: {
                 id
             },
-            include: {
-                comments: {
+            select: {
+                id: true,
+                description: true,
+                image_path: true,
+                createdAt: true,
+                updatedAt: true,
+                commentsCount: true,
+                likesCount: true,
+                user: {
                     select: {
                         id: true,
-                        content: true
+                        username: true,
+                        unique_username: true
                     }
-                },
-                likes: {
-                    orderBy: {
-                        createdAt: "desc"
-                    },
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                username: true
-                            }
-                        }
-                    }
-                },
-                _count: true
+                }
             }
         });
         return post;
