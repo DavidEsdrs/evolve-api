@@ -19,11 +19,27 @@ export class FollowUserService {
             throw new Error("Can't follow the same user more than once!");
         }
 
-        await this.prisma.followerMap.create({
+        const followMapCreationPromise = this.prisma.followerMap.create({
             data: {
                 followerId: follower_id,
                 followingId: following_id
             }
         });
+
+        const incrementFollowerCount = this.prisma.user.update({
+            where: { id: following_id }, 
+            data: { followersCount: { increment: 1 } }
+        });
+
+        const incrementFollowingCount = this.prisma.user.update({
+            where: { id: follower_id },
+            data: { followingCount: { increment: 1 } }
+        });
+        
+        await this.prisma.$transaction([
+            followMapCreationPromise,
+            incrementFollowerCount,
+            incrementFollowingCount
+        ]);
     }
 }
