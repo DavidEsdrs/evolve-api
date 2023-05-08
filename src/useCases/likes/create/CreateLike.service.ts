@@ -15,11 +15,21 @@ export class CreateLikeService {
             throw new Error("Can't like the same post more than once!");
         }
 
-        await this.prisma.like.create({
+        const likeInsertPromise = this.prisma.like.create({
             data: {
                 postId: post_id,
                 userId: user_id
             }
         });
+
+        const likesCountIncrementPromise = this.prisma.post.update({
+            where: { id: post_id },
+            data: { likesCount: { increment: 1 } }
+        });
+
+        await this.prisma.$transaction([
+            likeInsertPromise,
+            likesCountIncrementPromise
+        ]);
     }
 }
