@@ -13,6 +13,7 @@ import { buildCreateLike } from "./useCases/likes/create/CreateLike.builder";
 import { buildFollowUser } from "./useCases/users/follow/FollowUser.builder";
 import { buildGetPostImage } from "./useCases/posts/getImage/GetPostImage.builder";
 import { buildGetUser } from "./useCases/users/get/GetUser.builder";
+import { buildGetFeedPosts } from "./useCases/posts/feed/GetFeedPosts.builder";
 
 const router = Router();
 
@@ -38,6 +39,8 @@ router.post("/posts/:post_id/comment", (req, res) => buildCreateComment().handle
 
 router.post("/posts/:post_id/like", (req, res) => buildCreateLike().handle(req, res));
 
-router.post("/users/:user_id/followers", ensureAuth, (req, res) => buildFollowUser().handle(req, res));
+router.post("/users/:user_id/followers", (req, res) => buildFollowUser().handle(req, res));
+
+router.get("/users/feed", (req, res) => buildGetFeedPosts().handle(req, res));
 
 export { router };
