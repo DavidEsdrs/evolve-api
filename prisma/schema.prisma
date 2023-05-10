@@ -16,6 +16,7 @@ model User {
   bio             String?       @db.VarChar(255)
   createdAt       DateTime      @default(now()) @map("created_at")
   updatedAt       DateTime      @default(now()) @map("updated_at")
+  pictureFilePath String?       @db.VarChar(30) @map("picture_file_path")
   posts           Post[]
   comments        Comment[]
   likes           Like[]
