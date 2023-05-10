@@ -8,7 +8,6 @@ const app = express();
 
 app.use((req, res, next) => {
     const origin = req.headers.origin;
-    console.log({origin})
     if(origin === process.env.FRONT_END_URL) {
         res.setHeader("Access-Control-Allow-Credentials", "true");
     }
