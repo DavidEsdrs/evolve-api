@@ -1,47 +1,45 @@
 ## Instagram copy
-- Perfil:
-    * Privado ou público:
-        - Privado é necessário aceitar os seguidores;
+- Profile:
+    * [TODO] Private or public:
+        - When the profile is private the user need to accept new followers requests;
     * Bio;
-    * Fotos;
-- Seguidores:
-- Direct:
-- Destaques:
+    * Photos;
+- Followers:
+- [TODO] Direct:
+- [TODO] Highlights:
 - Feed:
-    * Listagem de posts;
-    * Comentários;
-    * Curtidas;
+    * List posts;
+    * Comments;
+    * Likes;
 - Stories:
-- Explorar:
+- Explore:
     * Tags;
 
 ### User
-- Foto de perfil;
-- Nome;
-- Arroba;
+- Profile pic;
+- Name;
+- Username;
 - Bio;
--- Postagens;
--- Número de seguidores;
--- Número de pessoas que o usuário segue;
+-- Posts;
+-- Number of followers;
+-- Number of users that the user follows;
 
 ### Post
-- Imagem ou vídeo;
-- Descrição;
-- Número de curtidas;
-- Comentários mais recentes;
+- Image;
+- Description;
+- Number of likes;
 
-### Comentário
-- Conteúdo;
-- Curtidas;
-- Comentários;
+### Comment
+- Content;
+- Likes;
 
-### Storie
-- Imagem;
+### [TODO] Storie
+- Image;
 
-### Direct
-- Conteúdo;
+### [TODO] Direct
+- Real-time chat;
 
 ### Tech
-- MongoDB (MySQL);
+- MySQL;
 - React Native;
 - NodeJS;
