@@ -23,6 +23,7 @@ model User {
   following       FollowerMap[] @relation("follower_id")
   followersCount  Int           @default(0) @map("followers_count")
   followingCount  Int           @default(0) @map("following_count")
+  interactions    InteractionHistory[]
 
   @@map("users")
 }
@@ -40,6 +41,7 @@ model Post {
   likes         Like[]
   likesCount    Int       @default(0) @map("likes_count")
   tags          Tag[]
+  interactions  InteractionHistory[]
 
   @@index([userId], map: "posts_userId_fkey")
   @@map("posts")
@@ -91,4 +93,24 @@ model FollowerMap {
   follower    User @relation("follower_id", fields: [followerId], references: [id], onDelete: Cascade)
 
   @@map("followers_map")
+}
+
+model InteractionHistory {
+  id Int @id @default(autoincrement())
+  type Type
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  post Post @relation(fields: [postId], references: [id])
+  postId Int
+
+  @@map("interactions_history")
+}
+
+enum Type {
+  COMMENT
+  LIKE
+  VISUALIZATION
 }
