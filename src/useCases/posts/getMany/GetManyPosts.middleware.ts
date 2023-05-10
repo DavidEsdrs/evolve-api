@@ -39,6 +39,25 @@ const querySchema = z.object({
             return parsed;
         }).
         refine(val => val > 0).
+        optional(),
+
+    interactions: z.
+        string().
+        transform((val, ctx) => {
+            const parsed = Number(val);
+            if(isNaN(parsed)) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.invalid_type,
+                    message: "Interactions must to be a number",
+                    expected: "number",
+                    received: "nan"
+                });
+                
+                return z.NEVER;
+            }
+            return parsed;
+        }).
+        refine(val => val > 0).
         optional()
 });
 
