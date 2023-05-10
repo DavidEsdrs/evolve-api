@@ -13,8 +13,8 @@ export class CreatePostController {
 
     async handle(req: Request, res: Response) {
         const { user_id, file_props: { file_name, file_type } } = req;
-        const { description } = req.body;
-        const post = await this.service.execute({ user_id, description, file_name });
+        const { description, tags } = req.body;
+        const post = await this.service.execute({ user_id, description, file_name, tags });
         return res.json(post);
     }
 }
