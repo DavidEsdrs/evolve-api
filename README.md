@@ -43,3 +43,5 @@
 - MySQL;
 - React Native;
 - NodeJS;
+
+[TODO] Improve this file
