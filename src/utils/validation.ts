@@ -9,7 +9,7 @@ export const createValidator = (schema: Schema): ExpressMiddleware  => {
             await schema.parseAsync(req.body);
             return next();
         } catch (err) {
-            return res.status(422).json({ error: "Invalid body!" });
+            return res.status(422).json({ error: "Invalid body!", stack: err });
         }
     }
 }
