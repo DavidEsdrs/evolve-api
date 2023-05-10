@@ -7,6 +7,7 @@ export class CreateLikeService {
     ) {}
 
     async execute({ post_id, user_id }: ICreateLikeDTO) {
+        console.log(user_id)
         const userAlreadyLikedPost = await this.prisma.like.findFirst({ 
             where: { AND: [ { postId: post_id }, { userId: user_id } ] }
         });
@@ -27,9 +28,19 @@ export class CreateLikeService {
             data: { likesCount: { increment: 1 } }
         });
 
-        await this.prisma.$transaction([
+        const transactionsPromise = this.prisma.$transaction([
             likeInsertPromise,
             likesCountIncrementPromise
         ]);
+
+        // No need to guarantee saving the interaction (by performing it inside the above transaction) as saving interactions is not a key feature of the app
+        const interactionsSavingPromise = this.prisma.interactionHistory.create({
+            data: {
+                type: "LIKE",
+                postId: post_id,
+                userId: user_id
+            }
+        });
+        await Promise.all([transactionsPromise, interactionsSavingPromise]);
     }
 }
