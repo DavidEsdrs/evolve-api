@@ -18,10 +18,19 @@ export class CreateCommentService {
             where: { id: post_id },
             data: { commentsCount: { increment: 1 } }
         });
-        const [comment, _] = await this.prisma.$transaction([
+        const savingCommentTransactionPromise = this.prisma.$transaction([
             commentCreationPromise,
             commentsCountIncrementPromise
         ]);
+        // No need to guarantee saving the interaction (by performing it inside the above transaction) as saving interactions is not needed for any key feature of the app
+        const interactionsSavingPromise = this.prisma.interactionHistory.create({
+            data: {
+                type: "COMMENT",
+                userId: user_id,
+                postId: post_id
+            }
+        });
+        const [[comment]] = await Promise.all([savingCommentTransactionPromise, interactionsSavingPromise]);
         return comment;
     }
 }
