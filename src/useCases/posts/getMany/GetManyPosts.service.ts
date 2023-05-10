@@ -2,11 +2,6 @@ import { Post, PrismaClient } from "@prisma/client";
 import { IGetManyPostsDTO } from "./GetManyPosts.dto";
 import { calcByWeight } from "../../../utils/util";
 
-interface TagUsage { 
-    name: string;
-    count: number;
-};
-
 export class GetManyPostsService {
     constructor(
         private prisma: PrismaClient
@@ -71,11 +66,8 @@ export class GetManyPostsService {
                             name: {
                                 in: tagsUsage.filter(tag => tag[0] !== tagUsage[0]).map(tag => tag[0])
                             }
-                        } 
+                        }
                     } 
-                },
-                include: {
-                    tags: true
                 },
                 take: tagUsage[1]
             });
