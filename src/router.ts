@@ -14,6 +14,11 @@ import { buildFollowUser } from "./useCases/users/follow/FollowUser.builder";
 import { buildGetPostImage } from "./useCases/posts/getImage/GetPostImage.builder";
 import { buildGetUser } from "./useCases/users/get/GetUser.builder";
 import { buildGetFeedPosts } from "./useCases/posts/feed/GetFeedPosts.builder";
+import { buildUploadProfilePicture } from "./useCases/users/uploadProfilePicture/UploadProfilePicture.builder";
+import { uploadProfilePictureMiddlewares } from "./useCases/users/uploadProfilePicture/UploadProfilePicture.middleware";
+import { buildGetProfilePicture } from "./useCases/users/getProfilePicture/GetProfilePicture.builder";
+import { buildGetCommentsFromPost } from "./useCases/comments/getCommentsFromPost/GetCommentsFromPost.builder";
+import { buildGetLikesFromPost } from "./useCases/likes/getLikesFromPost/GetLikesFromPost.builder";
 
 const router = Router();
 
@@ -37,10 +42,19 @@ router.get("/posts/:post_id/image", (req, res) => buildGetPostImage().handle(req
 
 router.post("/posts/:post_id/comment", (req, res) => buildCreateComment().handle(req, res));
 
+router.get("/posts/:post_id/comment", (req, res) => buildGetCommentsFromPost().handle(req, res));
+
 router.post("/posts/:post_id/like", (req, res) => buildCreateLike().handle(req, res));
+
+router.get("/posts/:post_id/likes", (req, res) => buildGetLikesFromPost().handle(req, res));
 
 router.post("/users/:user_id/followers", (req, res) => buildFollowUser().handle(req, res));
 
 router.get("/users/feed", (req, res) => buildGetFeedPosts().handle(req, res));
+
+router.post("/users/picture", ...uploadProfilePictureMiddlewares, (req, res) => buildUploadProfilePicture().handle(req, res));
+
+router.get("/users/:id/picture", (req, res) => buildGetProfilePicture().handle(req, res));
+
 
 export { router };
