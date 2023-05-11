@@ -1,12 +1,15 @@
 version: '3.3'
 services:
   db:
-    image: mysql:5.7
+    image: mysql
     restart: always
-    env_file:
-      - .env
+    environment:
+      - MYSQL_DATABASE=instaclone
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
     ports:
-      - '3306:3306'
+      - '3333:3306'
     expose:
       - '3306'
     volumes:
