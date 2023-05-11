@@ -14,7 +14,11 @@ export const createMulterParser = (url: string, file_field: string, conditions: 
                     if(!fs.existsSync(config.URL)) {
                         fs.mkdirSync(config.URL);
                         fs.mkdirSync(path.join(config.URL, file_field));
+
+                    } else if (!fs.existsSync(path.join(config.URL, file_field))) {
+                        fs.mkdirSync(path.join(config.URL, file_field));
                     }
+
                     cb(null, path.join(config.URL, file_field));
                 },
 
