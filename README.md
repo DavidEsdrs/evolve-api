@@ -1,6 +1,10 @@
 
 # Instagram-clone
 
+This API offers a comprehensive set of features similar to those found on Instagram. You can use it to post images along with descriptions and tags for efficient searching and indexing. Additionally, you can interact with posts by liking them or leaving comments. The API also provides functionality to interact with users, allowing you to follow and be followed, among other features.
+
+The final project aims to include three additional features in addition to the main functionalities offered by the Instagram Clone API. These features include Direct Messaging for private communication between users, a Stories-like functionality for sharing temporary content, and a Highlights-like feature to showcase relevant stories on user profiles.
+
 ## How to run?
 
 - Prerequisites:
@@ -56,7 +60,7 @@ docker compose up -d
 npx prisma migrate dev
 ```
 
-- Now, just run the project and consume it!:
+- Finnaly, run the project:
 
 ```sh
 yarn dev
@@ -69,6 +73,8 @@ output if everything is ok:
 ```sh
 running at port:4747
 ```
+
+Happy hacking :smile:!
 
 ***
 
@@ -126,4 +132,4 @@ running at port:4747
 - React Native;
 - NodeJS;
 
-[TODO] Improve this file
+[TODO] API Swagger Docs
