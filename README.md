@@ -1,5 +1,5 @@
 
-# Instagram-clone
+# Evolve API
 
 This API offers a comprehensive set of features similar to those found on Instagram. You can use it to post images along with descriptions and tags for efficient searching and indexing. Additionally, you can interact with posts by liking them or leaving comments. The API also provides functionality to interact with users, allowing you to follow and be followed, among other features.
 
